@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pool;
 
+use App\Models\Pool;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -74,6 +75,7 @@ class CreatePoolForm extends Component
 
         $this->reset('question');
         $this->resetOptions();
+        $this->dispatch('poolCreated')->to(Pools::class);
     }
 
     public function render()

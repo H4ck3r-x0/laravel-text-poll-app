@@ -60,3 +60,33 @@ test('can reset the options on the create pool form', function () {
         ->assertSet('options', [''])
         ->assertHasNoErrors();
 });
+
+
+test('can create a pool', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $component = Volt::test('pool.create-pool-form')
+        ->set('question', 'What is your favorite color?')
+        ->set('options', ['Red', 'Blue']);
+
+    $component->call('createPool');
+
+    $component
+        ->assertSet('question', '')
+        ->assertSet('options', [''])
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseHas('pools', [
+        'question' => 'What is your favorite color?',
+    ]);
+
+    $this->assertDatabaseHas('options', [
+        'text' => 'Red',
+    ]);
+
+    $this->assertDatabaseHas('options', [
+        'text' => 'Blue',
+    ]);
+});

@@ -17,16 +17,19 @@
         </header>
 
         <section class="flex flex-col gap-6">
-            <textarea autofocus
+            <textarea wire:model="question" autofocus
                 class="w-full bg-gray-700 text-gray-200 border  resize-none rounded-xl px-4 py-3 placeholder:text-gray-400 placeholder:dark:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent"
                 placeholder="What's in your mind?" rows="1"></textarea>
-
+            @error('question')
+                <span class="text-red-500 text-xs -mt-3">{{ $message }}</span>
+            @enderror
             <div>
                 @foreach ($options as $index => $option)
                     <div class="relative flex items-center gap-3 {{ $index > 0 ? 'mt-4' : '' }}">
                         <input type="text" placeholder="Add Option"
                             class="w-full bg-gray-700 text-gray-200 border resize-none rounded-xl px-4 py-3 placeholder:text-gray-400 placeholder:dark:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent"
                             wire:model="options.{{ $index }}">
+
                         <button class="absolute right-0 px-3 text-gray-400 hover:text-red-300"
                             wire:click.prevent="removeOption({{ $index }})">
                             <x-trash-icon />
@@ -34,6 +37,13 @@
                     </div>
                 @endforeach
             </div>
+
+            @error('options')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+            @error('options.*')
+                <span class=" text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </section>
 
         <footer class="flex items-center justify-between mt-8">
@@ -55,7 +65,7 @@
                 @endif
             </div>
 
-            <button type="button" @disabled(count($options) < 2 ? true : false)
+            <button type="button" wire:click="createPool" @disabled(count($options) < 2 ? true : false)
                 class="bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
                 <x-send-icon />
             </button>

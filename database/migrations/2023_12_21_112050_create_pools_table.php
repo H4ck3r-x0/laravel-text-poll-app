@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pools', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->text('question');
 
             $table->foreignId('user_id')
                 ->constrained()

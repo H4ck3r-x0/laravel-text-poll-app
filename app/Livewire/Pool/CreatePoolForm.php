@@ -2,15 +2,35 @@
 
 namespace App\Livewire\Pool;
 
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreatePoolForm extends Component
 {
+
+    /**
+     * The question for the CreatePoolForm.
+     *
+     * @var string
+     */
+    #[Validate('required')]
+    public string $question = '';
+
     /**
      * The options for the CreatePoolForm.
      *
      * @var array
      */
+    // #[Validate('required', 'min:2', 'max:10', 'array')]
+    #[Validate([
+        'options' => 'required|array|min:2|max:10',
+        'options.*' => 'required|min:2|max:65',
+    ], message: [
+        'required' => 'The :attribute cannot be empty.',
+        'options.required' => 'The :attribute are missing.',
+    ], attribute: [
+        'options.*' => 'option',
+    ])]
     public array $options = [''];
 
     /**
@@ -36,6 +56,24 @@ class CreatePoolForm extends Component
     public function resetOptions()
     {
         $this->options = [''];
+    }
+
+    public function createPool()
+    {
+        $this->validate();
+
+        $pool = auth()->user()->pools()->create([
+            'question' => $this->question,
+        ]);
+
+        $pool->options()->createMany(
+            array_map(function ($option) {
+                return ['text' => $option];
+            }, $this->options)
+        );
+
+        $this->reset('question');
+        $this->resetOptions();
     }
 
     public function render()

@@ -3,8 +3,10 @@
 namespace App\Livewire\Pool;
 
 use App\Models\Pool;
-use Livewire\Attributes\On;
+use App\Models\Vote;
+use App\Models\Option;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class Pools extends Component
 {
@@ -13,26 +15,41 @@ class Pools extends Component
      */
     public $pools;
 
+    /**
+     * The selected option for the pool.
+     *
+     * @var mixed
+     */
+    public $selectedOption;
+
 
     /**
-     * Mount the component.
+     * Vote for a pool option.
      *
-     * Retrieve all pools with their associated user, options, and votes.
-     * Calculate the percentage for each option in the pool.
+     * @param int $poolId The ID of the pool.
+     * @return void
      */
+    public function vote($poolId)
+    {
+        $optionId = $this->selectedOption;
+
+        Vote::firstOrCreate(
+            ['user_id' => auth()->id(), 'pool_id' => $poolId],
+            ['option_id' => $optionId]
+        );
+    }
+
     #[On('poolCreated')]
-    public function mount()
+    public function render()
     {
         $this->pools = Pool::with('user', 'options.votes')->latest()->get();
 
         foreach ($this->pools as $pool) {
             $pool->options = $pool->getOptionsWithPercentage();
+
+            $pool->hasVoted = $pool->votes->contains('user_id', auth()->id());
         }
-    }
 
-
-    public function render()
-    {
-        return view('livewire.pool.pools');
+        return view('livewire.pool.pools', ['pools' => $this->pools]);
     }
 }

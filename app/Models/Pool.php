@@ -23,6 +23,11 @@ class Pool extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function votes(): HasMany
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     /**
      * Get the options associated with the pool.
      *

@@ -11,7 +11,7 @@ class Pool extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    protected $guarded = [];
 
     /**
      * Get the user that owns the pool.
@@ -23,6 +23,11 @@ class Pool extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the votes for the pool.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
@@ -39,6 +44,16 @@ class Pool extends Model
     }
 
     /**
+     * Get the likes associated with the pool.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function likes(): HasMany
+    {
+        return $this->hasMany(PoolLike::class);
+    }
+
+    /**
      * Calculate the percentage of votes for each option in the pool.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -52,5 +67,25 @@ class Pool extends Model
         }
 
         return $this->options;
+    }
+
+    /**
+     * Get the value of the "hasVoted" attribute.
+     *
+     * @return bool
+     */
+    public function getHasVotedAttribute()
+    {
+        return $this->votes->contains('user_id', auth()->id());
+    }
+
+    /**
+     * Get the value of the "hasLiked" attribute.
+     *
+     * @return bool
+     */
+    public function getHasLikedAttribute()
+    {
+        return $this->likes->contains('user_id', auth()->id());
     }
 }

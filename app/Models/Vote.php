@@ -9,7 +9,7 @@ class Vote extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    protected $guarded = [];
 
     /**
      * Get the pool that owns the vote.

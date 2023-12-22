@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Pool;
 
-use App\Models\Pool;
-use App\Models\Vote;
 use App\Models\Option;
-use Livewire\Component;
+use App\Models\Pool;
+use App\Models\PoolLike;
+use App\Models\Vote;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class Pools extends Component
 {
@@ -21,6 +22,12 @@ class Pools extends Component
      * @var mixed
      */
     public $selectedOption;
+
+
+    public function selectOption($optionId)
+    {
+        $this->selectedOption = $optionId;
+    }
 
 
     /**
@@ -39,16 +46,35 @@ class Pools extends Component
         );
     }
 
+    public function like($poolId)
+    {
+
+        $poolLike = PoolLike::where('user_id', auth()->id())->where('pool_id', $poolId);
+
+        if ($poolLike->exists()) {
+            $poolLike->delete();
+        } else {
+            PoolLike::create([
+                'user_id' => auth()->id(),
+                'pool_id' => $poolId
+            ]);
+        }
+    }
+
     #[On('poolCreated')]
     public function render()
     {
-        $this->pools = Pool::with('user', 'options.votes')->latest()->get();
 
-        foreach ($this->pools as $pool) {
-            $pool->options = $pool->getOptionsWithPercentage();
 
-            $pool->hasVoted = $pool->votes->contains('user_id', auth()->id());
-        }
+        $this->pools = Pool::with(['user:id,name,created_at', 'options', 'options.votes', 'likes', 'votes'])
+            ->withCount(['votes', 'likes'])
+            ->latest()
+            ->get()
+            ->each(function ($pool) {
+                $pool->options = $pool->getOptionsWithPercentage();
+                $pool->user_pools_count = $pool->user->pools()->count();
+            });
+
 
         return view('livewire.pool.pools', ['pools' => $this->pools]);
     }

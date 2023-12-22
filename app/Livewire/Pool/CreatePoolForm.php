@@ -75,7 +75,7 @@ class CreatePoolForm extends Component
 
         $this->reset('question');
         $this->resetOptions();
-        $this->dispatch('poolCreated')->to(Pools::class);
+        $this->dispatch('poolCreated');
     }
 
     public function render()

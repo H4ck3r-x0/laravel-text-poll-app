@@ -9,7 +9,7 @@ class Option extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    protected $guarded = [];
 
     public function pool()
     {

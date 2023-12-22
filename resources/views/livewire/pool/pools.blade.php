@@ -9,7 +9,7 @@
                     <div class="flex-1">
                         <h1 class="text-3xl text-white">{{ $pool->user->name ?? 'Mohammed Fahad' }}</h1>
                         <ul class="flex items-center gap-2  stroke-purple-500">
-                            <li class="text-xs  font-semibold text-gray-400">38 Pools</li>
+                            <li class="text-xs  font-semibold text-gray-400">{{ $pool->user_pools_count }} Pools</li>
                             <li class="text-xs font-semibold text-gray-400">|</li>
                             <li class="text-xs font-semibold text-gray-400">
                                 Member Since
@@ -26,16 +26,18 @@
                         <label>
                             <div class="relative pt-1">
                                 <div
-                                    class="overflow-hidden h-12 mb-2  flex rounded bg-green-100 hover:bg-green-500 hover:cursor-pointer transition-all">
+                                    class="overflow-hidden h-12 mb-2  flex rounded bg-green-50 hover:bg-green-300 {{ $selectedOption == $option->id ? 'bg-green-500 text-white' : '' }} hover:cursor-pointer transition-all">
                                     <div style="width:{{ $option->percentage }}%"
                                         class="shadow-none flex flex-col  justify-center bg-green-400">
                                         <div class="px-4">
-                                            <p class="text-lg text-gray-800">{{ $option->text }}</p>
+                                            <p class="text-lg text-gray-800">
+                                                {{ $option->text }}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <input wire:model="selectedOption" type="radio" name="option_id"
+                                    <input @disabled($pool->hasVoted ? true : false) wire:model="selectedOption"
+                                        wire:click="selectOption({{ $option->id }})" type="radio" name="option_id"
                                         value="{{ $option->id }}" class="hidden">
                                     <div>
                                         <p class="text-sm font-semibold text-gray-100">(
@@ -48,7 +50,13 @@
                         </label>
                     @endforeach
 
-                    <div class="flex justify-end">
+                    <div class="flex items-center justify-between">
+                        <button type="button" wire:click="like({{ $pool->id }})"
+                            class="flex items-center gap-2 bg-gray-600 dark:bg-gray-700 text-white px-4 py-2 hover:text-red-300 hover:bg-opacity-75 rounded-xl  {{ $pool->hasLiked ? 'bg-red-300 text-white dark:bg-red-400' : '' }}">
+                            <x-like-icon />
+                            {{ $pool->likes_count }}
+                        </button>
+
                         <button type="button" wire:click="vote({{ $pool->id }})" @disabled($pool->hasVoted ? true : false)
                             class="bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
                             <x-send-icon />

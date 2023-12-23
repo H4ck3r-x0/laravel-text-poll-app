@@ -49,21 +49,31 @@
                             </div>
                         </label>
                     @endforeach
-
+                </section>
+                <footer>
                     <div class="flex items-center justify-between">
-                        <button type="button" wire:click="like({{ $pool->id }})"
-                            class="flex items-center gap-2 bg-gray-600 dark:bg-gray-700 text-white px-4 py-2 hover:text-red-300 hover:bg-opacity-75 rounded-xl  {{ $pool->hasLiked ? 'bg-red-300 text-white dark:bg-red-400' : '' }}">
-                            <x-like-icon />
-                            {{ $pool->likes_count }}
-                        </button>
+                        <div class="flex items-center gap-4">
+                            <button type="button" wire:click="like({{ $pool->id }})"
+                                class="flex items-center gap-2 bg-gray-600 dark:bg-gray-700 text-white px-4 py-2 hover:text-red-300 hover:bg-opacity-75 rounded-xl  {{ $pool->hasLiked ? 'bg-red-300 text-white dark:bg-red-400' : '' }}">
+                                <x-like-icon />
+                                {{ $pool->likes_count }}
+                            </button>
+                            <div>
+                                <div class="flex -space-x-2 overflow-hidden">
+                                    @foreach ($pool->likes->take(5) as $like)
+                                        <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white"
+                                            src="https://i.pravatar.cc/150?img={{ $like->user_id }}" alt="avatar">
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
 
                         <button type="button" wire:click="vote({{ $pool->id }})" @disabled($pool->hasVoted ? true : false)
                             class="bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
                             <x-send-icon />
                         </button>
                     </div>
-
-                </section>
+                </footer>
             </div>
         </div>
     @endforeach

@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pool;
 
-use App\Models\Pool;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -22,7 +21,6 @@ class CreatePoolForm extends Component
      *
      * @var array
      */
-    // #[Validate('required', 'min:2', 'max:10', 'array')]
     #[Validate([
         'options' => 'required|array|min:2|max:10',
         'options.*' => 'required|min:2|max:65',
@@ -33,6 +31,14 @@ class CreatePoolForm extends Component
         'options.*' => 'option',
     ])]
     public array $options = [''];
+
+    public $userPoolsCount;
+
+
+    public function mount()
+    {
+        $this->userPoolsCount = auth()->user()->pools()->count();
+    }
 
     /**
      * Adds an empty option to the options array.

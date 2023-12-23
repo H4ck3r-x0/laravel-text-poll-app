@@ -64,9 +64,15 @@ class Pools extends Component
     #[On('poolCreated')]
     public function render()
     {
-
-
-        $this->pools = Pool::with(['user:id,name,created_at', 'options', 'options.votes', 'likes', 'votes'])
+        $this->pools = Pool::with(
+            [
+                'user:id,name,created_at',
+                'options',
+                'options.votes',
+                'likes',
+                'votes'
+            ]
+        )
             ->withCount(['votes', 'likes'])
             ->latest()
             ->get()

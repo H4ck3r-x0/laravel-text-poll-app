@@ -74,9 +74,7 @@ class CreatePoolForm extends Component
         ]);
 
         $pool->options()->createMany(
-            array_map(function ($option) {
-                return ['text' => $option];
-            }, $this->options)
+            collect($this->options)->map(fn ($option) => ['text' => $option])->all()
         );
 
         $this->reset('question');

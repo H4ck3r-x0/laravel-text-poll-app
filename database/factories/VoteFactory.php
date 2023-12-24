@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Option>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vote>
  */
-class OptionFactory extends Factory
+class VoteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,8 @@ class OptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'text' => $this->faker->word,
-            // 'pool_id' => \App\Models\Pool::factory(),
+            'user_id' => \App\Models\User::factory(),
+            // 'option_id' => \App\Models\Option::factory(),
         ];
     }
 }

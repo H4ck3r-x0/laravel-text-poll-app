@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Pool;
+use App\Models\Vote;
 use App\Models\Option;
+use App\Models\PoolLike;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +29,13 @@ class PoolFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Pool $pool) {
-            Option::factory()->create(['pool_id' => $pool->id]);
+            PoolLike::factory(rand(1, 10))->create(['pool_id' => $pool->id]);
+
+
+            $options = Option::factory(3)->create(['pool_id' => $pool->id]);
+            foreach ($options as $option) {
+                Vote::factory(rand(1, 10))->create(['option_id' => $option->id, 'pool_id' => $pool->id]);
+            }
         });
     }
 }

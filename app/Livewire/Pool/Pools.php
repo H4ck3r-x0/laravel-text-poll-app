@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Pool;
 
-use App\Models\Option;
 use App\Models\Pool;
 use App\Models\PoolLike;
 use App\Models\Vote;

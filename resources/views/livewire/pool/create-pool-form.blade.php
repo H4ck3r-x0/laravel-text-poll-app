@@ -41,7 +41,6 @@
                 @endforeach
             </div>
 
-
             @error('options.*')
                 <span class=" text-red-500 text-sm">{{ $message }}</span>
             @enderror
@@ -55,6 +54,7 @@
                     <span class="tracking-wide">Add Option</span>
                 </button>
 
+
                 @if (count($options) > 3)
                     <button wire:click="resetOptions" wire:confirm="Are you sure you want to reset all options inputs?"
                         class="bg-gray-600 dark:bg-gray-700 flex items-center gap-2 text-white px-8 py-3 hover:text-red-300 hover:bg-opacity-75 rounded-xl transition-all">
@@ -67,9 +67,16 @@
             </div>
 
             <button type="button" wire:click="createPool" @disabled(count($options) < 2 ? true : false)
+                data-tooltip-target="createPoolButton" data-tooltip-placement="left"
                 class="bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
                 <x-send-icon />
             </button>
+
+            <div id="createPoolButton" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Please add at least 2 options
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
         </footer>
     </div>
 </div>

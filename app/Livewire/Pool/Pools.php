@@ -7,9 +7,11 @@ use App\Models\PoolLike;
 use App\Models\Vote;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 class Pools extends Component
 {
+    use Toast;
     /**
      * @var array $pools The pools data.
      */
@@ -49,6 +51,14 @@ class Pools extends Component
         Vote::firstOrCreate(
             ['user_id' => auth()->id(), 'pool_id' => $poolId],
             ['option_id' => $optionId]
+        );
+
+        $this->success(
+            'Wishlist <u>updated</u>',
+            'You will <strong>love it :)</strong>',
+            position: 'bottom-end',
+            icon: 'o-heart',
+            css: 'bg-pink-500 text-base-100'
         );
     }
 

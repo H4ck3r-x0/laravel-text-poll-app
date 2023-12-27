@@ -2,10 +2,9 @@
     <div
         class="flex flex-col gap-6 bg-gray-700 text-gray-300 dark:bg-gray-800 dark:text-gray-200 p-8 rounded-lg shadow-lg">
         <header class="flex items-center gap-6 w-full pl-0">
-            <img class="w-20 h-20 shadow-lg rounded-lg" src="https://i.pravatar.cc/150?img={{ auth()->id() }}"
-                alt="avatar">
+            <img class="w-20 h-20 shadow-lg rounded-lg" src="https://i.pravatar.cc/150" alt="avatar">
             <div>
-                <h1 class="text-3xl text-white">{{ auth()->user()->name ?? 'Mohammed Fahad' }}</h1>
+                <h1 class="text-3xl text-white">{{ auth()->user()->name }}</h1>
                 <ul class="flex items-center gap-2  stroke-purple-500">
                     <li class="text-xs  font-semibold text-gray-400">
                         {{ $userPoolsCount }} {{ Str::plural('Pool', $userPoolsCount) }}
@@ -65,18 +64,12 @@
                     </button>
                 @endif
             </div>
-
             <button type="button" wire:click="createPool" @disabled(count($options) < 2 ? true : false)
-                data-tooltip-target="createPoolButton" data-tooltip-placement="left"
-                class="bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
+                data-tip="Please add at least 2 options"
+                class="{{ count($options) < 2 ? 'tooltip' : '' }} bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-600 disabled:cursor-not-allowed">
                 <x-send-icon />
             </button>
 
-            <div id="createPoolButton" role="tooltip"
-                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                Please add at least 2 options
-                <div class="tooltip-arrow" data-popper-arrow></div>
-            </div>
         </footer>
     </div>
 </div>

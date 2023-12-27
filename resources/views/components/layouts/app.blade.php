@@ -10,10 +10,10 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+
 </head>
 
-<body class="font-sans py-8  bg-gray-50 text-gray-800 dark:text-white dark:bg-gray-900">
+<body class="font-sans py-8 bg-gray-50 text-gray-800 dark:text-white dark:bg-gray-900">
     <div class="mx-auto max-w-7xl px-6">
         @livewire('welcome.navigation')
 
@@ -21,8 +21,6 @@
             {{ $slot }}
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 
 </body>
 

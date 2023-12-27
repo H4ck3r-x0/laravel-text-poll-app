@@ -2,19 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Pool;
-use Illuminate\Database\Seeder;
+use App\Models\Comment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
-class PoolSeeder extends Seeder
+class CommentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Pool::factory()
-            ->count(5)
-            ->create();
+        Comment::factory()->count(10)->create();
     }
 }

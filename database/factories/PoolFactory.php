@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Comment;
 use App\Models\Pool;
 use App\Models\Vote;
 use App\Models\Option;
@@ -30,7 +31,7 @@ class PoolFactory extends Factory
     {
         return $this->afterCreating(function (Pool $pool) {
             PoolLike::factory(rand(1, 10))->create(['pool_id' => $pool->id]);
-
+            Comment::factory(rand(1, 10))->create(['pool_id' => $pool->id]);
 
             $options = Option::factory(3)->create(['pool_id' => $pool->id]);
             foreach ($options as $option) {

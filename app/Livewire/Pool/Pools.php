@@ -15,17 +15,20 @@ class Pools extends Component
      */
     public $pools;
 
+    public $amount = 1;
+
     /**
      * The selected option for the pool.
      *
      * @var mixed
      */
-    public $selectedOption;
+
+    public array $selectedOption = [];
 
 
-    public function selectOption($optionId)
+    public function selectOption($poolId, $optionId)
     {
-        $this->selectedOption = $optionId;
+        $this->selectedOption[$poolId] = $optionId;
     }
 
 
@@ -37,7 +40,11 @@ class Pools extends Component
      */
     public function vote($poolId)
     {
-        $optionId = $this->selectedOption;
+        if (!isset($this->selectedOption[$poolId])) {
+            return;
+        }
+
+        $optionId = $this->selectedOption[$poolId];
 
         Vote::firstOrCreate(
             ['user_id' => auth()->id(), 'pool_id' => $poolId],
@@ -47,8 +54,8 @@ class Pools extends Component
 
     public function like($poolId)
     {
-
-        $poolLike = PoolLike::where('user_id', auth()->id())->where('pool_id', $poolId);
+        $poolLike = PoolLike::where('user_id', auth()->id())
+            ->where('pool_id', $poolId);
 
         if ($poolLike->exists()) {
             $poolLike->delete();
@@ -58,6 +65,11 @@ class Pools extends Component
                 'pool_id' => $poolId
             ]);
         }
+    }
+
+    public function load()
+    {
+        $this->amount += 1;
     }
 
     #[On('poolCreated')]
@@ -74,6 +86,7 @@ class Pools extends Component
         )
             ->withCount(['votes', 'likes'])
             ->latest()
+            ->take($this->amount)
             ->get()
             ->each(function ($pool) {
                 $pool->options = $pool->getOptionsWithPercentage();
@@ -82,5 +95,11 @@ class Pools extends Component
 
 
         return view('livewire.pool.pools', ['pools' => $this->pools]);
+    }
+
+
+    public function openCommentsModal($poolId)
+    {
+        $this->dispatch('openCommentsModal', poolId: $poolId);
     }
 }

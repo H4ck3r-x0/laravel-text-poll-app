@@ -1,15 +1,19 @@
-<div class="mt-8">
+<div class="mt-8" x-data="{ load: false }">
     @foreach ($pools as $pool)
         <div class="mx-auto max-w-4xl mb-6" wire:key="{{ $pool->id }}">
             <div
                 class="flex flex-col gap-6 bg-gray-700 text-gray-300 dark:bg-gray-800 dark:text-gray-200 p-8 rounded-lg shadow-lg">
                 <header class="flex items-center gap-6 w-full pl-0">
-                    <img class="w-20 h-20 shadow-lg rounded-lg" src="https://i.pravatar.cc/150?img={{ auth()->id() }}"
+                    <img class="w-20 h-20 shadow-lg rounded-lg" src="https://i.pravatar.cc/150?u={{ $pool->user->id }}"
                         alt="avatar">
                     <div class="flex-1">
-                        <h1 class="text-3xl text-white">{{ $pool->user->name ?? 'Mohammed Fahad' }}</h1>
+                        <h1 class="text-lg sm:text-3xl truncate text-white">
+                            {{ $pool->user->name }}
+                        </h1>
                         <ul class="flex items-center gap-2  stroke-purple-500">
-                            <li class="text-xs  font-semibold text-gray-400">{{ $pool->user_pools_count }} Pools</li>
+                            <li class="text-xs  font-semibold text-gray-400">
+                                {{ $pool->user_pools_count }} {{ Str::plural('Pool', $pool->user_pools_count) }}
+                            </li>
                             <li class="text-xs font-semibold text-gray-400">|</li>
                             <li class="text-xs font-semibold text-gray-400">
                                 Member Since
@@ -26,7 +30,7 @@
                         <label>
                             <div class="relative pt-1">
                                 <div
-                                    class="overflow-hidden h-12 mb-2  flex rounded bg-green-50 hover:bg-green-300 {{ $selectedOption == $option->id ? 'bg-green-500 text-white' : '' }} hover:cursor-pointer transition-all">
+                                    class="overflow-hidden h-12 mb-2  flex rounded-full bg-green-50 hover:bg-green-300 {{ $selectedOption == $option->id ? 'bg-green-500 text-white' : '' }} hover:cursor-pointer transition-all">
                                     <div style="width:{{ $option->percentage }}%"
                                         class="shadow-none flex flex-col  justify-center bg-green-400">
                                         <div class="px-4">
@@ -36,9 +40,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <input @disabled($pool->hasVoted ? true : false) wire:model="selectedOption"
-                                        wire:click="selectOption({{ $option->id }})" type="radio" name="option_id"
-                                        value="{{ $option->id }}" class="hidden">
+                                    <input @disabled($pool->hasVoted ? true : false)
+                                        wire:click="selectOption({{ $pool->id }}, {{ $option->id }})""
+                                        type="radio" name="option_id" value="{{ $option->id }}" class="hidden">
                                     <div>
                                         <p class="text-sm font-semibold text-gray-100">(
                                             {{ $option->votes_count }} {{ Str::plural('vote', $option->votes) }}
@@ -50,31 +54,54 @@
                         </label>
                     @endforeach
                 </section>
+
                 <footer>
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-4">
+                            <button
+                                class="flex items-center gap-2 bg-gray-600 dark:bg-gray-700 text-white px-4 py-2 hover:text-red-300 hover:bg-opacity-75 rounded-xl"
+                                type="button" @click="$wire.openCommentsModal({{ $pool->id }})">
+                                <x-comments-icon />
+                            </button>
                             <button type="button" wire:click="like({{ $pool->id }})"
-                                class="flex items-center gap-2 bg-gray-600 dark:bg-gray-700 text-white px-4 py-2 hover:text-red-300 hover:bg-opacity-75 rounded-xl  {{ $pool->hasLiked ? 'bg-red-300 text-white dark:bg-red-400' : '' }}">
+                                class="flex items-center gap-2 bg-gray-600 dark:bg-gray-700 text-white px-4 py-2 hover:text-green-400 hover:bg-opacity-75 rounded-xl  {{ $pool->hasLiked ? 'bg-red-300 hover:text-white text-white dark:bg-red-400' : '' }}">
                                 <x-like-icon />
                                 {{ $pool->likes_count }}
                             </button>
                             <div>
-                                <div class="flex -space-x-2 overflow-hidden">
+                                <div class="sm:flex items-center hidden  avatar-group -space-x-6">
                                     @foreach ($pool->likes->take(5) as $like)
-                                        <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white"
-                                            src="https://i.pravatar.cc/150?img={{ $like->user_id }}" alt="avatar">
+                                        <div class="avatar">
+                                            <div class="w-10">
+                                                <img src="https://i.pravatar.cc/150?img={{ rand(1, 5) }}" />
+                                            </div>
+                                        </div>
                                     @endforeach
+
+                                    @if ($pool->likes_count - $pool->likes->take(5)->count() !== 0)
+                                        <div class="avatar placeholder">
+                                            <div class="w-10 bg-neutral text-neutral-content">
+                                                <span>+{{ $pool->likes_count - $pool->likes->take(5)->count() }}</span>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-
-                        <button type="button" wire:click="vote({{ $pool->id }})" @disabled($pool->hasVoted ? true : false)
-                            class="bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
-                            <x-send-icon />
-                        </button>
+                        @if (!$pool->hasVoted)
+                            <button data-tip="Please select an option to vote!" type="button"
+                                wire:click="vote({{ $pool->id }})" @disabled(!isset($selectedOption[$pool->id]) || $selectedOption[$pool->id] == null)
+                                class="{{ !isset($selectedOption[$pool->id]) ? 'tooltip' : '' }} bg-gray-600 dark:bg-gray-700 text-white px-10 py-4 hover:text-green-300 hover:bg-opacity-75 rounded-xl disabled:hover:text-white disabled:bg-gray-500 disabled:cursor-not-allowed">
+                                <x-send-icon />
+                            </button>
+                        @endif
                     </div>
                 </footer>
             </div>
         </div>
     @endforeach
+    @livewire('pool.comment')
+
+    <div class="mt-4" x-intersect.full="$wire.load()">
+    </div>
 </div>

@@ -8,12 +8,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
-<body class="font-sans py-8 bg-gray-50 text-gray-800 dark:text-white dark:bg-gray-900 min-h-screen">
+<body class="font-sans py-8 bg-white text-gray-800 dark:text-white dark:bg-gray-900 min-h-screen ">
     <div class="mx-auto max-w-7xl px-6">
         @livewire('welcome.navigation')
 

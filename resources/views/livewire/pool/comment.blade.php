@@ -7,18 +7,14 @@
                         <div class="flex items-start justify-between">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
-                                    @if ($comment->relationLoaded('user'))
-                                        <img class="w-14 h-14 shadow-lg rounded-lg"
-                                            src="https://i.pravatar.cc/150?u={{ $comment->user->id }}"
-                                            alt="{{ $comment->user->name }}">
-                                    @endif
+                                    <img class="w-14 h-14 shadow-lg rounded-lg"
+                                        src="https://i.pravatar.cc/150?u={{ $comment->user->id }}"
+                                        alt="{{ $comment->user->name }}">
                                 </div>
                                 <div class="ml-3">
-                                    @if ($comment->relationLoaded('user'))
-                                        <p class="text-lg font-medium text-gray-800 dark:text-white">
-                                            {{ $comment->user->name }}
-                                        </p>
-                                    @endif
+                                    <p class="text-lg font-medium text-gray-800 dark:text-white">
+                                        {{ $comment->user->name }}
+                                    </p>
                                     <p class="text-sm text-gray-500">
                                         {{ $comment->created_at->diffForHumans() }}
                                     </p>
@@ -48,6 +44,5 @@
                 <x-send-icon />
             </button>
         </div>
-
     </x-modal>
 </div>

@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Option;
 use App\Models\Pool;
 use App\Models\User;
 use Livewire\Volt\Volt;
+
 
 test('user can select an option', function () {
     $user = User::factory()->create();
@@ -12,11 +14,11 @@ test('user can select an option', function () {
     $this->actingAs($user);
 
     $component = Volt::test('pool.pools')
-        ->set('selectedOption', null);
+        ->set('selectedOption', []);
 
-    $component->call('selectOption', $pool->options->first()->id);
+    $component->call('selectOption', $pool->id, $pool->options->first()->id);
 
-    $component->assertSet('selectedOption', $pool->options->first()->id);
+    $component->assertSet('selectedOption.' . $pool->id, $pool->options->first()->id);
 });
 
 test('user can vote for a pool option', function () {
@@ -27,7 +29,9 @@ test('user can vote for a pool option', function () {
     $this->actingAs($user);
 
     $component = Volt::test('pool.pools')
-        ->set('selectedOption', $pool->options->first()->id);
+        ->set('selectedOption', []);
+
+    $component->call('selectOption', $pool->id, $pool->options->first()->id);
 
     $component->call('vote', $pool->id);
 

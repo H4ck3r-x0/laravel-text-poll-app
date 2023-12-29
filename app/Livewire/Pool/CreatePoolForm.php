@@ -4,9 +4,12 @@ namespace App\Livewire\Pool;
 
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 class CreatePoolForm extends Component
 {
+
+    use Toast;
 
     /**
      * The question for the CreatePoolForm.
@@ -80,6 +83,16 @@ class CreatePoolForm extends Component
         $this->reset('question');
         $this->resetOptions();
         $this->dispatch('poolCreated');
+
+        $this->toast(
+            type: 'success',
+            title: 'It is done!',
+            description: null,                  // optional (text)
+            position: 'toast-top toast-end',    // optional (daisyUI classes)
+            icon: 'o-information-circle',       // Optional (any icon)
+            css: 'alert-info',                  // Optional (daisyUI classes)
+            timeout: 3000,                      // optional (ms)
+        );
     }
 
     public function render()

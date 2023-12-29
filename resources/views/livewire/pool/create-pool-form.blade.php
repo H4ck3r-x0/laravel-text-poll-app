@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-4xl" id="autoAnimateContainer">
+<div class="mx-auto max-w-5xl">
     <div
         class="flex flex-col gap-6 bg-gray-700 text-gray-300 dark:bg-gray-800 dark:text-gray-200 p-8 rounded-lg shadow-lg">
         <header class="flex items-center gap-6 w-full pl-0">
@@ -12,7 +12,7 @@
                     <li class="text-xs font-semibold text-gray-400">|</li>
                     <li class="text-xs font-semibold text-gray-400">
                         Member Since
-                        {{ auth()->user()?->created_at->diffForHumans() ?? '22 days ago' }}
+                        {{ auth()->user()?->created_at->diffForHumans() }}
                     </li>
                 </ul>
             </div>

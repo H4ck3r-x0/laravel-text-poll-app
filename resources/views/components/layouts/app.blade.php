@@ -20,7 +20,9 @@
             {{ $slot }}
         </div>
     </div>
-    <x-toast />
+
+
+    <x-mary-toast />
 </body>
 
 </html>

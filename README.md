@@ -28,7 +28,7 @@ Follow these steps to install the application:
 
 
 ```bash
-git clone https://github.com/H4ck3r-x0/laravel-text-pool-app.git
+git clone https://github.com/H4ck3r-x0/laravel-text-poll-app.git
 ```
 
 

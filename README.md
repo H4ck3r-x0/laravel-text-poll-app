@@ -11,7 +11,7 @@
 
 ## Introduction
 
-This is a Laravel Text Pool App project was created for fun ;).
+This is a Laravel Poll App project was created for fun ;).
 
 ## The amazing Stack
 Laravel, Livewire, Tailwindcss
@@ -28,12 +28,12 @@ Follow these steps to install the application:
 
 
 ```bash
-git clone https://github.com/H4ck3r-x0/laravel-text-pool-app.git
+git clone (https://github.com/H4ck3r-x0/laravel-text-poll-app.git](https://github.com/H4ck3r-x0/laravel-text-pool-app.git)
 ```
 
 
 ```bash
-cd laravel-text-pool-app
+cd laravel-text-poll-app
 composer install
 ```
 

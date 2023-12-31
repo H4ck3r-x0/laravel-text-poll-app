@@ -53,11 +53,18 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-## Run Database Migrations
+## Run Database Migrations & Seeds
 
 ```bash
-php artisan migrate
+php artisan migrate --seed
 ```
+
+## Run Tests
+
+```bash
+php artisan test
+```
+
 
 ## Run Database Migrations
 

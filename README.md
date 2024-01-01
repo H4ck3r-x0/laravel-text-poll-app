@@ -59,6 +59,12 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
+## Link the Storage for users's avatar
+
+```bash
+php artisan storage:link
+```
+
 ## Run Tests
 
 ```bash

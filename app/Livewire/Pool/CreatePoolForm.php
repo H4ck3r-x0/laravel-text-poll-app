@@ -8,7 +8,6 @@ use Mary\Traits\Toast;
 
 class CreatePoolForm extends Component
 {
-
     use Toast;
 
     /**
@@ -86,12 +85,11 @@ class CreatePoolForm extends Component
 
         $this->toast(
             type: 'success',
-            title: 'It is done!',
-            description: null,                  // optional (text)
-            position: 'toast-top toast-end',    // optional (daisyUI classes)
-            icon: 'o-information-circle',       // Optional (any icon)
-            css: 'alert-info',                  // Optional (daisyUI classes)
-            timeout: 3000,                      // optional (ms)
+            title: 'Poll Created Successfully!',
+            position: 'toast-top ',
+            icon: 'o-check-badge',
+            css: 'alert-info text-white',
+            timeout: 5000,
         );
     }
 

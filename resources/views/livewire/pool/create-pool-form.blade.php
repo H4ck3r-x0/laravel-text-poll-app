@@ -7,7 +7,7 @@
                 <h1 class="text-3xl text-white">{{ auth()->user()->name }}</h1>
                 <ul class="flex items-center gap-2  stroke-purple-500">
                     <li class="text-xs  font-semibold text-gray-400">
-                        {{ $userPoolsCount }} {{ Str::plural('Pool', $userPoolsCount) }}
+                        {{ $userPoolsCount }} {{ Str::plural('Poll', $userPoolsCount) }}
                     </li>
                     <li class="text-xs font-semibold text-gray-400">|</li>
                     <li class="text-xs font-semibold text-gray-400">

@@ -17,7 +17,12 @@ class Pools extends Component
      */
     public $pools;
 
-    public $amount = 1;
+    /**
+     * The amount of pools.
+     *
+     * @var int
+     */
+    public $amount = 5;
 
     /**
      * The selected option for the pool.
@@ -28,6 +33,13 @@ class Pools extends Component
     public array $selectedOption = [];
 
 
+    /**
+     * Selects an option for a specific pool.
+     *
+     * @param int $poolId The ID of the pool.
+     * @param int $optionId The ID of the option to select.
+     * @return void
+     */
     public function selectOption($poolId, $optionId)
     {
         $this->selectedOption[$poolId] = $optionId;
@@ -53,15 +65,22 @@ class Pools extends Component
             ['option_id' => $optionId]
         );
 
-        $this->success(
-            'Wishlist <u>updated</u>',
-            'You will <strong>love it :)</strong>',
-            position: 'bottom-end',
-            icon: 'o-heart',
-            css: 'bg-pink-500 text-base-100'
+        $this->toast(
+            type: 'success',
+            title: 'Thanks for your voting!',
+            position: 'toast-top ',
+            icon: 'o-check-badge',
+            css: 'alert-info text-white',
+            timeout: 5000,
         );
     }
 
+    /**
+     * Toggle the like status of a pool.
+     *
+     * @param int $poolId The ID of the pool to like/unlike.
+     * @return void
+     */
     public function like($poolId)
     {
         $poolLike = PoolLike::where('user_id', auth()->id())
@@ -77,11 +96,21 @@ class Pools extends Component
         }
     }
 
+    /**
+     * Increase the amount by 5.
+     *
+     * @return void
+     */
     public function load()
     {
-        $this->amount += 1;
+        $this->amount += 5;
     }
 
+    /**
+     * Render the pools component.
+     *
+     * @return \Illuminate\View\View
+     */
     #[On('poolCreated')]
     public function render()
     {
@@ -107,7 +136,12 @@ class Pools extends Component
         return view('livewire.pool.pools', ['pools' => $this->pools]);
     }
 
-
+    /**
+     * Opens the comments modal for a specific pool.
+     *
+     * @param int $poolId The ID of the pool.
+     * @return void
+     */
     public function openCommentsModal($poolId)
     {
         $this->dispatch('openCommentsModal', poolId: $poolId);

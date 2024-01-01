@@ -12,7 +12,7 @@
                         </h1>
                         <ul class="flex items-center gap-2  stroke-purple-500">
                             <li class="text-xs  font-semibold text-gray-400">
-                                {{ $pool->user_pools_count }} {{ Str::plural('Pool', $pool->user_pools_count) }}
+                                {{ $pool->user_pools_count }} {{ Str::plural('Poll', $pool->user_pools_count) }}
                             </li>
                             <li class="text-xs font-semibold text-gray-400">|</li>
                             <li class="text-xs font-semibold text-gray-400">
@@ -21,7 +21,10 @@
                             </li>
                         </ul>
                     </div>
-                    <p class="text-sm text-gray-400">{{ $pool->created_at->diffForHumans() }}</p>
+                    <div class="flex items-center gap-4">
+                        <p class="text-sm text-gray-400">{{ $pool->created_at->diffForHumans() }}</p>
+                        {{-- Dropdown here,, --}}
+                    </div>
                 </header>
 
                 <section class="flex flex-col gap-6">

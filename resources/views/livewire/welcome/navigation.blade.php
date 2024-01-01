@@ -25,7 +25,7 @@ new class extends Component {
                     <a href="{{ route('home') }}" wire:navigate>
                         <x-application-logo class="w-12 h-12 fill-current text-gray-500" />
                     </a>
-                    <h2 class="text-lg text-gray-800 dark:text-gray-300 font-semibold">Laravel Pool</h2>
+                    <h2 class="text-lg text-gray-800 dark:text-gray-300 font-semibold">Laravel Poll</h2>
                 </div>
 
                 <!-- Navigation Links -->

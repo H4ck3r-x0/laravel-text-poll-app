@@ -2,7 +2,8 @@
     <div
         class="flex flex-col gap-6 bg-gray-700 text-gray-300 dark:bg-gray-800 dark:text-gray-200 p-8 rounded-lg shadow-lg">
         <header class="flex items-center gap-6 w-full pl-0">
-            <img class="w-20 h-20 shadow-lg rounded-lg" src="https://i.pravatar.cc/150" alt="avatar">
+            <img class="w-20 h-20 shadow-lg rounded-lg" src="https://avatar.iran.liara.run/public/{{ auth()->id() }}"
+                alt="avatar">
             <div>
                 <h1 class="text-3xl text-white">{{ auth()->user()->name }}</h1>
                 <ul class="flex items-center gap-2  stroke-purple-500">

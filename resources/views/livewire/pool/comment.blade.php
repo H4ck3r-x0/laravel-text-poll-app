@@ -1,5 +1,5 @@
 <div>
-    <x-modal wire:model="commentsModal">
+    <x-mary-modal wire:model="commentsModal">
         <div class="flex flex-col max-h-[650px] overflow-y-auto no-scrollbar">
             @if ($comments)
                 @foreach ($comments as $comment)
@@ -44,5 +44,5 @@
                 <x-send-icon />
             </button>
         </div>
-    </x-modal>
+    </x-mary-modal>
 </div>

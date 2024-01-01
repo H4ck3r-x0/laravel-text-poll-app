@@ -3,7 +3,7 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     server: {
-        host: 'pool.test'
+        host: 'poll.test'
     },
     plugins: [
         laravel({

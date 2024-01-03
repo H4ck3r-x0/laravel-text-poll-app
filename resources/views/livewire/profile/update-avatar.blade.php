@@ -49,7 +49,7 @@ new class extends Component {
             @if ($avatar)
                 <img class=" w-28 h-28 rounded-full" src="{{ $avatar->temporaryUrl() }}">
             @elseif (Auth::user()->avatar)
-                <img class=" w-28 h-28 rounded-full" src="{{ asset('/storage/' . Auth::user()->avatar) }}">
+                <img class=" w-28 h-28 rounded-full" src="{{ Auth::user()->avatar }}">
             @endif
 
 

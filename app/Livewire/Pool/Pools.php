@@ -116,7 +116,7 @@ class Pools extends Component
     {
         $this->pools = Pool::with(
             [
-                'user:id,name,created_at',
+                'user:id,name,avatar,created_at',
                 'options',
                 'options.votes',
                 'likes',

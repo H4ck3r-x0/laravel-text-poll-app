@@ -4,13 +4,7 @@
             <div
                 class="flex flex-col gap-6 bg-gray-700 text-gray-300 dark:bg-gray-800 dark:text-gray-200 p-8 rounded-lg shadow-lg">
                 <header class="flex items-center gap-6 w-full pl-0">
-
-                    @if (Auth::user()->avatar)
-                        <img class=" w-20 h-20 rounded-full" src="{{ asset('/storage/' . Auth::user()->avatar) }}">
-                    @else
-                        <img class="w-20 h-20 shadow-lg rounded-lg"
-                            src="https://avatar.iran.liara.run/public/{{ $pool->user->id }}" alt="avatar">
-                    @endif
+                    <img class=" w-20 h-20 rounded-full" src="{{ $pool->user->avatar }}">
                     <div class="flex-1">
                         <h1 class="text-lg sm:text-3xl truncate text-white">
                             {{ $pool->user->name }}
@@ -81,7 +75,7 @@
                                     @foreach ($pool->likes->take(5) as $like)
                                         <div class="avatar">
                                             <div class="w-10">
-                                                <img src="https://avatar.iran.liara.run/public/{{ $like->id }}" />
+                                                <img src="{{ $like->user->avatar }}" />
                                             </div>
                                         </div>
                                     @endforeach

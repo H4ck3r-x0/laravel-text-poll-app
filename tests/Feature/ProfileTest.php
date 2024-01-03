@@ -12,6 +12,7 @@ test('profile page is displayed', function () {
 
     $response
         ->assertOk()
+        ->assertSeeVolt('profile.update-avatar')
         ->assertSeeVolt('profile.update-profile-information-form')
         ->assertSeeVolt('profile.update-password-form')
         ->assertSeeVolt('profile.delete-user-form');

@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
     ];
 
@@ -51,5 +52,10 @@ class User extends Authenticatable
     public function votes()
     {
         return $this->hasMany(Vote::class);
+    }
+
+    public function getAvatarAttribute($value)
+    {
+        return $value ? asset("/storage/" . $value) : asset('assets/defaultAvatar.png');
     }
 }

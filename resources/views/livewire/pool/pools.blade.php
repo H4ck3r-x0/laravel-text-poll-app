@@ -1,6 +1,7 @@
 <div class="mt-8" x-data="{ load: false }">
     @foreach ($pools as $pool)
         <div class="mx-auto max-w-5xl  mb-6" wire:key="{{ $pool->id }}">
+            {{-- Test merging... --}}
             <div
                 class="flex flex-col gap-6 bg-gray-700 text-gray-300 dark:bg-gray-800 dark:text-gray-200 p-8 rounded-lg shadow-lg">
                 <header class="flex items-center gap-6 w-full pl-0">

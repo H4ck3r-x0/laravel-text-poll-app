@@ -3,7 +3,6 @@
 namespace App\Livewire\Pool;
 
 use App\Models\Comment as CommentModel;
-use App\Models\Pool;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -39,8 +38,6 @@ class Comment extends Component
     #[Validate('required|min:3')]
     public string $commentInput = '';
 
-
-
     /**
      * Opens the comments modal and retrieves the comments for a specific pool.
      *
@@ -53,8 +50,8 @@ class Comment extends Component
         $this->poolId = $poolId;
         $this->commentsModal = true;
 
-        $this->comments = CommentModel::withUser()
-            ->where('pool_id', $this->poolId)
+        $this->comments = CommentModel::where('pool_id', $this->poolId)
+            ->withUser()
             ->latest()
             ->get();
     }

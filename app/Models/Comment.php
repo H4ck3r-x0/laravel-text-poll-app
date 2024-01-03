@@ -28,6 +28,6 @@ class Comment extends Model
 
     public function scopeWithUser($query)
     {
-        return $query->with('user:id,name');
+        return $query->with('user:id,name,avatar');
     }
 }

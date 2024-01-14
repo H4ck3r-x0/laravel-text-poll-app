@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Option;
 use App\Models\Pool;
 use App\Models\User;
 use Livewire\Volt\Volt;

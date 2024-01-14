@@ -130,6 +130,11 @@ class Pools extends Component
             ->each(function ($pool) {
                 $pool->options = $pool->getOptionsWithPercentage();
                 $pool->user_pools_count = $pool->user->pools()->count();
+                $userVote = $pool->userVote();
+
+                foreach ($pool->options as $option) {
+                    $option->voted_by_user = $userVote && $userVote->option_id === $option->id;
+                }
             });
 
 

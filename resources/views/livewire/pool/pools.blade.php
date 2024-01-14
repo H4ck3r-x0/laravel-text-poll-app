@@ -32,9 +32,9 @@
                         <label>
                             <div class="relative pt-1">
                                 <div
-                                    class="overflow-hidden h-12 mb-2  flex rounded-full bg-green-50 hover:bg-green-300 {{ $selectedOption == $option->id ? 'bg-green-500 text-white' : '' }} hover:cursor-pointer transition-all">
+                                    class="overflow-hidden h-12 mb-2  flex rounded-full bg-green-50 hover:bg-green-300   hover:cursor-pointer transition-all">
                                     <div style="width:{{ $option->percentage }}%"
-                                        class="shadow-none flex flex-col  justify-center bg-green-400">
+                                        class="shadow-none flex flex-col  justify-center bg-green-400 {{ $option->voted_by_user ? 'bg-indigo-400 ' : '' }} ">
                                         <div class="px-4">
                                             <p class="text-lg text-gray-800">
                                                 {{ $option->text }}</p>

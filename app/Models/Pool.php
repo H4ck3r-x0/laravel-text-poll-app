@@ -13,6 +13,10 @@ class Pool extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'has_voted',
+    ];
+
     /**
      * Get the user that owns the pool.
      *
@@ -77,6 +81,16 @@ class Pool extends Model
     public function getHasVotedAttribute()
     {
         return $this->votes->contains('user_id', auth()->id());
+    }
+
+    /**
+     * Get the user's vote for this pool.
+     *
+     * @return Vote|null
+     */
+    public function userVote()
+    {
+        return $this->votes()->where('user_id', auth()->id())->first();
     }
 
     /**

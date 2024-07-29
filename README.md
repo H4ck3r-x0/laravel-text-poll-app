@@ -72,7 +72,7 @@ php artisan test
 ```
 
 
-## Run Database Migrations
+## Run The server
 
 ```bash
 php artisan serve
